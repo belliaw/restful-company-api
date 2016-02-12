@@ -10,29 +10,29 @@ $(document).ready(function () {
     var successStr = "SUCCESS";
 
     var res = $.parseJSON('[{"id":33,"name":"4","address":"4fsaffdsafdsfdfsfasfsfasfdafaf3","city":"43","country":"43","email":"43","phoneNumber":"532"},{"id":34,"name":"4","address":"43","city":"43","country":"43","email":"43","phoneNumber":""}]');
+
+    loadCompanyGroup();
     ////get data
     //alert($.parseJSON(res).id);
-    $.each(res, function (i, val) {
+    //$.each(res, function (i, val) {
+    //    $("#collapseTwo table tbody").append(
+    //        '<tr><form>' +
+    //        '<td>' + val.id + '</td>' +
+    //        '<td>' + val.name + '</td>' +
+    //        '<td>' + val.address + '</td>' +
+    //        '<td>' + val.city + '</td>' +
+    //        '<td>' + val.country + '</td>' +
+    //        '<td>' + val.email + '</td>' +
+    //        '<td>' + val.phoneNumber + '</td>' +
+    //        '<td><button role="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit"></button></td>' +
+    //        '</form></tr>'
+    //    );
+    //});
 
-        $("#collapseTwo table tbody").append(
-            '<tr><form>' +
-            '<td>' + val.id + '</td>' +
-            '<td>' + val.name + '</td>' +
-            '<td>' + val.address + '</td>' +
-            '<td>' + val.city + '</td>' +
-            '<td>' + val.country + '</td>' +
-            '<td>' + val.email + '</td>' +
-            '<td>' + val.phoneNumber + '</td>' +
-            '<td><button role="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit"></button></td>' +
-            '</form></tr>'
-        )
-        ;
-    });
-
-    $("#collapseTwo table tbody tr button").click(function()
-    {
-        updateModal($(this).closest('tr'));
-    });
+    //$("#collapseTwo table tbody tr button").click(function()
+    //{
+    //    updateModal($(this).closest('tr'));
+    //});
 
 
     //$.ajax({
@@ -128,14 +128,117 @@ $(document).ready(function () {
         $("#client-modal").modal('show');
     });
 
-    var updateModal = (function (row) {
-        var tableData = row.children("td").map(function () {
-            return $(this).text();
-        }).get();
+});
 
-        alert("Your data is: " + $.trim(tableData[0]) + " , " + $.trim(tableData[1]) + " , " + $.trim(tableData[2]));
-
+function loadCompanyGroup()
+{
+    $("#companies_grid").jqGrid({
+        //url: url + '/getAllCompanies',
+        url: "data.json",
+        //editurl: 'clientArray',
+        datatype: "json",
+        colModel: [
+            {
+                label: 'ID',
+                name: 'id',
+                width: 30,
+                key: true,
+                editable: false,
+                editrules: {required: true}
+            },
+            {
+                label: 'Name',
+                name: 'Name',
+                width: 50,
+                editable: true // must set editable to true if you want to make the field editable
+            },
+            {
+                label: 'Address',
+                name: 'Address',
+                width: 125,
+                editable: true
+            },
+            {
+                label: 'City',
+                name: 'City',
+                width: 70,
+                editable: true
+            },
+            {
+                label: 'Country',
+                name: 'Country',
+                width: 70,
+                editable: true
+            },
+            {
+                label: 'Email',
+                name: 'Email',
+                width: 80,
+                editable: true
+            },
+            {
+                label: 'PhoneNumber',
+                name: 'PhoneNumber',
+                width: 80,
+                editable: true
+            }
+        ],
+        sortname: 'id',
+        sortorder: 'asc',
+        loadonce: true,
+        navOptions: {reloadGridOptions: {fromServer: true}},
+        viewrecords: true,
+        width: 500,
+        height: 200,
+        rowNum: 10,
+        pager: "#companies_grid_pager",
     });
 
-});
+    $('#companies_grid').navGrid('#companies_grid_pager',
+        {
+            edit: true,
+            add: true,
+            del: true,
+            search: false,
+            refresh: false,
+            view: false,
+            position: "left",
+            cloneToTop: false
+        },
+        // options for the Edit Dialog
+        {
+            editCaption: "Edit",
+            recreateForm: true,
+            checkOnUpdate: true,
+            checkOnSubmit: true,
+            closeAfterEdit: true,
+            reloadAfterSubmit: true,
+            afterComplete: function (response, postdata) {
+                $("#companies_grid").setGridParam({datatype: 'json', page: 1}).trigger('reloadGrid');
+                return [true];
+            },
+            errorTextFormat: function (data) {
+                return 'Error: ' + data.responseText
+            }
+        },
+        // options for the Add Dialog
+        {
+            closeAfterAdd: true,
+            recreateForm: true,
+            reloadAfterSubmit: true,
+            afterComplete: function (response, postdata) {
+                $("#companies_grid").setGridParam({datatype: 'json', page: 1}).trigger('reloadGrid');
+                return [true];
+            },
+            errorTextFormat: function (data) {
+                return 'Error: Unable to perform request. Was data input valid?';
+            }
+        },
+        // options for the Delete Dailog
+        {
+            errorTextFormat: function (data) {
+                return 'Error: ' + data.responseText
+            }
+        });
+}
 

@@ -9,6 +9,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="../../resources/script.js"></script>
+    <script src="../../resources/jqgrid/js/jquery.jqGrid.min.js"></script>
+    <script src="../../resources/jqgrid/src/i18n/grid.locale-en.js"></script>
     <style>
         .content-panel {
             padding: 35px;
@@ -138,23 +140,25 @@
                         </div>
                         <div id="collapseTwo" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Address</th>
-                                        <th>City</th>
-                                        <th>Country</th>
-                                        <th>Email</th>
-                                        <th>Phone No</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+                                <table id="companies_grid"></table>
+                                <div id="companies_grid_pager"></div>
+                                <!--<table class="table table-hover">-->
+                                    <!--<thead>-->
+                                    <!--<tr>-->
+                                        <!--<th>ID</th>-->
+                                        <!--<th>Name</th>-->
+                                        <!--<th>Address</th>-->
+                                        <!--<th>City</th>-->
+                                        <!--<th>Country</th>-->
+                                        <!--<th>Email</th>-->
+                                        <!--<th>Phone No</th>-->
+                                        <!--<th>&nbsp;</th>-->
+                                    <!--</tr>-->
+                                    <!--</thead>-->
+                                    <!--<tbody>-->
 
-                                    </tbody>
-                                </table>
+                                    <!--</tbody>-->
+                                <!--</table>-->
                             </div>
                         </div>
                     </div>
