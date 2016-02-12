@@ -11,11 +11,4 @@ import java.util.List;
  */
 public interface CompanyDAO extends CrudRepository<Company,Long>
 {
-    List<Company> findByName(String name);
-
-    List<Company> findById(long id);
-
-    List<Company> findAll();
-
-
 }

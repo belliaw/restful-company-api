@@ -18,7 +18,7 @@
         <jpa.version>1.0.1.Final</jpa.version>
         <postgres.version>9.4-1200-jdbc4</postgres.version>
         <slf4j.version>1.7.6</slf4j.version>
-        <lombok.version>1.16.6</lombok.version>
+        <lombok.version>1.14.2</lombok.version>
         <jdk.version>1.8</jdk.version>
         <jstl.version>1.2</jstl.version>
         <servletapi.version>2.5</servletapi.version>
@@ -95,6 +95,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
           <dependency>
             <groupId>javax.servlet</groupId>
@@ -107,9 +108,7 @@
             <version>${servletapi.version}</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -148,7 +147,7 @@
 
             </plugin>
         </plugins>
-        <finalName>companyws</finalName>
+        <finalName>restful-company-api</finalName>
     </build>
 
 </project>

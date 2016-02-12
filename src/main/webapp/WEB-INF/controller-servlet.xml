@@ -20,5 +20,6 @@
     </bean>
 
     <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:resources mapping="/clientHTML/**" location="/WEB-INF/client/" />
     <mvc:annotation-driven />
 </beans>

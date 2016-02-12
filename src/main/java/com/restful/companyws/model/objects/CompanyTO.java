@@ -1,5 +1,6 @@
-package com.restful.companyws.model;
+package com.restful.companyws.model.objects;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Data;
  * @since: 12/02/2016 09:58
  */
 @Data
+@AllArgsConstructor
 public class CompanyTO
 {
     private long id;

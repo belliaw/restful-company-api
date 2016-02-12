@@ -1,4 +1,4 @@
-package com.restful.companyws.model;
+package com.restful.companyws.model.objects;
 
 import lombok.Data;
 

@@ -2,6 +2,8 @@ package com.restful.companyws.api;
 
 import com.restful.companyws.data.entities.Company;
 import com.restful.companyws.data.repository.CompanyDAO;
+import com.restful.companyws.model.ModelFactory;
+import com.restful.companyws.model.objects.CompanyTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * The Controller of the web application. It exposes the required RESTFul methods
@@ -78,13 +82,45 @@ public class Controller
     @RequestMapping(value = "/getAllCompanies")
     public ResponseEntity<?> getAllCompanies()
     {
-        return null;
+        LOG.info("Received getAllCompanies request");
+
+        try
+        {
+            List<CompanyTO> companyTOs = ModelFactory.getCompanyTOs(
+                    companyRepo.findAll()
+            );
+
+            LOG.info("getAllCompanies request complete");
+
+            return new ResponseEntity<>(companyTOs,HttpStatus.OK);
+        }
+        catch(Exception ex)
+        {
+            LOG.error("Error in fetching companies", ex);
+            return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+        }
     }
 
     @RequestMapping(value = "/getCompany/{id}")
     public ResponseEntity<?> getCompany(@PathVariable("id") long id)
     {
-        return null;
+        LOG.info("Received getCompany request for ID:[{}]",id);
+
+        try
+        {
+            CompanyTO companyTO = ModelFactory.getCompanyTO(
+                    companyRepo.findOne(id)
+            );
+
+            LOG.info("Company with ID:[{}] Name:[{}] found",companyTO.getId(),companyTO.getName());
+
+            return new ResponseEntity<>(companyTO,HttpStatus.OK);
+        }
+        catch(Exception ex)
+        {
+            LOG.error("Error in fetching company",ex);
+            return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+        }
     }
 
     @RequestMapping(value = "/updateCompany/{id}")
