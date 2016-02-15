@@ -9,48 +9,80 @@ $(document).ready(function () {
     var errorStr = "ERROR";
     var successStr = "SUCCESS";
 
-    var res = $.parseJSON('[{"id":33,"name":"4","address":"4fsaffdsafdsfdfsfasfsfasfdafaf3","city":"43","country":"43","email":"43","phoneNumber":"532"},{"id":34,"name":"4","address":"43","city":"43","country":"43","email":"43","phoneNumber":""}]');
+    //var res = $.parseJSON('[{"id":33,"name":"4","address":"4fsaffdsafdsfdfsfasfsfasfdafaf3","city":"43","country":"43","email":"43","phoneNumber":"532"},{"id":34,"name":"4","address":"43","city":"43","country":"43","email":"43","phoneNumber":""}]');
+    //var res1 = $.parseJSON('{"id":11,"name":"11","address":"My Eleven","city":"111","country":"1111","email":"mail","phoneNumber":""}');
 
-    loadCompanyGroup();
     ////get data
     //alert($.parseJSON(res).id);
-    //$.each(res, function (i, val) {
-    //    $("#collapseTwo table tbody").append(
-    //        '<tr><form>' +
-    //        '<td>' + val.id + '</td>' +
-    //        '<td>' + val.name + '</td>' +
-    //        '<td>' + val.address + '</td>' +
-    //        '<td>' + val.city + '</td>' +
-    //        '<td>' + val.country + '</td>' +
-    //        '<td>' + val.email + '</td>' +
-    //        '<td>' + val.phoneNumber + '</td>' +
-    //        '<td><button role="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit"></button></td>' +
-    //        '</form></tr>'
-    //    );
-    //});
+    $.ajax({
+        url: (url + "/getAllCompanies"),
+        type: "POST",
+        dataType: 'json',
+        data: {},
+        success: function (data, textStatus, jqXHR)
+        {
+            $.each(data, function (i, val) {
+                $("#collapseTwo table tbody").append(
+                    '<tr><form>' +
+                    '<td>' + val.id + '</td>' +
+                    '<td>' + val.name + '</td>' +
+                    '<td>' + val.address + '</td>' +
+                    '<td>' + val.city + '</td>' +
+                    '<td>' + val.country + '</td>' +
+                    '<td>' + val.email + '</td>' +
+                    '<td>' + val.phoneNumber + '</td>' +
+                    '</form></tr>'
+                );
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            populateModal(errorStr,"Error in fetching data");
+        }
+    });
 
-    //$("#collapseTwo table tbody tr button").click(function()
-    //{
-    //    updateModal($(this).closest('tr'));
-    //});
+    $("#search-company-form button").click(function (e) {
+
+        var errors = [];
+
+        var companyId = $("#id").val();
+
+        if (!companyId)
+            errors.push("Company ID");
+
+        if (!areDetailsValid(errors)) {
+            return false;
+        }
+
+        $(this).find('span').toggleClass('glyphicon glyphicon-refresh glyphicon-refresh-animate active');
+        $(this).prop('disabled', true);
+
+        //AJAX Request
+        $.ajax({
+            url: (url + "/getCompany/" + companyId),
+            type: "POST",
+            dataType: 'json',
+            data: $("#create-company-form").serialize(),
+            success: function (data, textStatus, jqXHR) {
+                $("#edit-area").removeClass("hidden");
+                $("#edit-name").val(data.name);
+                $("#edit-address").val(data.address);
+                $("#edit-city").val(data.city);
+                $("#edit-country").val(data.country);
+                $("#edit-email").val(data.email);
+                $("#edit-phoneNumber").val(data.phoneNumber);
+                $("#search-company-form  button").prop('disabled', false);
+                $("#search-company-form button").find('span').removeClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#search-company-form  button").prop('disabled', false);
+                $("#search-company-form button").find('span').removeClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+                populateModal(errorStr, "Error in fetching company details");
+            }
+        });
 
 
-    //$.ajax({
-    //    url: (url + "/getAllCompanies"),
-    //    type: "POST",
-    //    dataType: 'json',
-    //    data: {},
-    //    success: function (data, textStatus, jqXHR)
-    //    {
-    //
-    //    },
-    //    error: function (jqXHR, textStatus, errorThrown)
-    //    {
-    //        //$("#create-company-form button").prop('disabled',false);
-    //        //$("#create-company-form button").find('span').removeClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
-    //        populateModal(errorStr,"Error in creating company");
-    //    }
-    //});
+    });
 
     $("#create-company-form button").click(function (e) {
         var errors = [];
@@ -129,116 +161,3 @@ $(document).ready(function () {
     });
 
 });
-
-function loadCompanyGroup()
-{
-    $("#companies_grid").jqGrid({
-        //url: url + '/getAllCompanies',
-        url: "data.json",
-        //editurl: 'clientArray',
-        datatype: "json",
-        colModel: [
-            {
-                label: 'ID',
-                name: 'id',
-                width: 30,
-                key: true,
-                editable: false,
-                editrules: {required: true}
-            },
-            {
-                label: 'Name',
-                name: 'Name',
-                width: 50,
-                editable: true // must set editable to true if you want to make the field editable
-            },
-            {
-                label: 'Address',
-                name: 'Address',
-                width: 125,
-                editable: true
-            },
-            {
-                label: 'City',
-                name: 'City',
-                width: 70,
-                editable: true
-            },
-            {
-                label: 'Country',
-                name: 'Country',
-                width: 70,
-                editable: true
-            },
-            {
-                label: 'Email',
-                name: 'Email',
-                width: 80,
-                editable: true
-            },
-            {
-                label: 'PhoneNumber',
-                name: 'PhoneNumber',
-                width: 80,
-                editable: true
-            }
-        ],
-        sortname: 'id',
-        sortorder: 'asc',
-        loadonce: true,
-        navOptions: {reloadGridOptions: {fromServer: true}},
-        viewrecords: true,
-        width: 500,
-        height: 200,
-        rowNum: 10,
-        pager: "#companies_grid_pager",
-    });
-
-    $('#companies_grid').navGrid('#companies_grid_pager',
-        {
-            edit: true,
-            add: true,
-            del: true,
-            search: false,
-            refresh: false,
-            view: false,
-            position: "left",
-            cloneToTop: false
-        },
-        // options for the Edit Dialog
-        {
-            editCaption: "Edit",
-            recreateForm: true,
-            checkOnUpdate: true,
-            checkOnSubmit: true,
-            closeAfterEdit: true,
-            reloadAfterSubmit: true,
-            afterComplete: function (response, postdata) {
-                $("#companies_grid").setGridParam({datatype: 'json', page: 1}).trigger('reloadGrid');
-                return [true];
-            },
-            errorTextFormat: function (data) {
-                return 'Error: ' + data.responseText
-            }
-        },
-        // options for the Add Dialog
-        {
-            closeAfterAdd: true,
-            recreateForm: true,
-            reloadAfterSubmit: true,
-            afterComplete: function (response, postdata) {
-                $("#companies_grid").setGridParam({datatype: 'json', page: 1}).trigger('reloadGrid');
-                return [true];
-            },
-            errorTextFormat: function (data) {
-                return 'Error: Unable to perform request. Was data input valid?';
-            }
-        },
-        // options for the Delete Dailog
-        {
-            errorTextFormat: function (data) {
-                return 'Error: ' + data.responseText
-            }
-        });
-}
-
