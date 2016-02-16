@@ -60,6 +60,22 @@ function populateOwnersList(url) {
     });
 }
 
+function populateModal(errorStr, error)
+{
+    switch (errorStr) {
+        case "SUCCESS":
+            $("#client-modal h4").html(
+                "<span class=\"glyphicon glyphicon-ok\" style=\"padding: 5px 15px 5px 5px\"></span>Request Succesful");
+
+            break;
+        case "ERROR":
+            $("#client-modal h4").html(
+                "<span class=\"glyphicon glyphicon-exclamation-sign\" style=\"padding: 5px 15px 5px 5px\"></span>Request Error");
+            break;
+    }
+    $("#client-modal p").html(error);
+    $("#client-modal").modal('show');
+}
 
 $(document).ready(function () {
 
@@ -257,22 +273,6 @@ $(document).ready(function () {
         }
 
         return true;
-    });
-
-    var populateModal = (function (status, text) {
-        switch (status) {
-            case "SUCCESS":
-                $("#client-modal h4").html(
-                    "<span class=\"glyphicon glyphicon-ok\" style=\"padding: 5px 15px 5px 5px\"></span>Request Succesful");
-
-                break;
-            case "ERROR":
-                $("#client-modal h4").html(
-                    "<span class=\"glyphicon glyphicon-exclamation-sign\" style=\"padding: 5px 15px 5px 5px\"></span>Request Error");
-                break;
-        }
-        $("#client-modal p").html(text);
-        $("#client-modal").modal('show');
     });
 });
 
