@@ -23,9 +23,15 @@
         <jstl.version>1.2</jstl.version>
         <servletapi.version>2.5</servletapi.version>
         <tomcat.version>8.0.28</tomcat.version>
+        <postgres.version>9.1-901.jdbc4</postgres.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgres.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
