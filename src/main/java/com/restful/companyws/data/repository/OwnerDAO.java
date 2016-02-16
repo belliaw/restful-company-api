@@ -1,7 +1,10 @@
 package com.restful.companyws.data.repository;
 
+import com.restful.companyws.data.entities.Company;
 import com.restful.companyws.data.entities.Owner;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
 
 /**
  * @author: william.bellia
@@ -9,4 +12,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface OwnerDAO extends CrudRepository<Owner,Long>
 {
+    List<Owner> findByCompany(Company company);
 }

@@ -9,36 +9,97 @@ $(document).ready(function () {
     var errorStr = "ERROR";
     var successStr = "SUCCESS";
 
-    //var res = $.parseJSON('[{"id":33,"name":"4","address":"4fsaffdsafdsfdfsfasfsfasfdafaf3","city":"43","country":"43","email":"43","phoneNumber":"532"},{"id":34,"name":"4","address":"43","city":"43","country":"43","email":"43","phoneNumber":""}]');
-    //var res1 = $.parseJSON('{"id":11,"name":"11","address":"My Eleven","city":"111","country":"1111","email":"mail","phoneNumber":""}');
+    //var json = '[{"id":1,"name":"Joe","surname":"Doe","companyTO":{"id":10,"name":"Test","address":"Tetst add","city":"Mosta","country":"Malta","email":"mamam","phoneNumber":"mamam"}}]';
 
-    ////get data
-    //alert($.parseJSON(res).id);
-    $.ajax({
-        url: (url + "/getAllCompanies"),
-        type: "POST",
-        dataType: 'json',
-        data: {},
-        success: function (data, textStatus, jqXHR)
-        {
-            $.each(data, function (i, val) {
-                $("#collapseTwo table tbody").append(
-                    '<tr><form>' +
-                    '<td>' + val.id + '</td>' +
-                    '<td>' + val.name + '</td>' +
-                    '<td>' + val.address + '</td>' +
-                    '<td>' + val.city + '</td>' +
-                    '<td>' + val.country + '</td>' +
-                    '<td>' + val.email + '</td>' +
-                    '<td>' + val.phoneNumber + '</td>' +
-                    '</form></tr>'
-                );
-            });
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            populateModal(errorStr,"Error in fetching data");
+    populateCompaniesList(url);
+    populateOwnersList(url);
+
+    //$.each($.parseJSON(json), function (i, val) {
+    //    $("#collapseFour table tbody").append(
+    //        '<tr>' +
+    //        '<td>' + val.id + '</td>' +
+    //        '<td>' + val.name + '</td>' +
+    //        '<td>' + val.surname + '</td>' +
+    //        '<td>' + val.companyTO.id + '</td>' +
+    //        '<td>' + val.companyTO.name + '</td>' +
+    //        '</tr>'
+    //    );
+    //});
+
+    //get companies
+    //$.ajax({
+    //    url: (url + "/getAllCompanies"),
+    //    type: "POST",
+    //    dataType: 'json',
+    //    data: {},
+    //    success: function (data, textStatus, jqXHR)
+    //    {
+    //        $.each(data, function (i, val) {
+    //            $("#collapseTwo table tbody").append(
+    //                '<tr><form>' +
+    //                '<td>' + val.id + '</td>' +
+    //                '<td>' + val.name + '</td>' +
+    //                '<td>' + val.address + '</td>' +
+    //                '<td>' + val.city + '</td>' +
+    //                '<td>' + val.country + '</td>' +
+    //                '<td>' + val.email + '</td>' +
+    //                '<td>' + val.phoneNumber + '</td>' +
+    //                '</form></tr>'
+    //            );
+    //        });
+    //    },
+    //    error: function (jqXHR, textStatus, errorThrown)
+    //    {
+    //        populateModal(errorStr,"Error in fetching data");
+    //    }
+    //});
+
+    //getOwners
+
+    $("#edit-company-form button").click(function (e) {
+
+        var errors = [];
+
+        if (!$("#edit-company-form #edit-name").val())
+            errors.push("Name");
+
+        if (!$("#edit-company-form #edit-address").val())
+            errors.push("Address");
+
+        if (!$("#edit-company-form #edit-city").val())
+            errors.push("City");
+
+        if (!$("#edit-company-form #edit-country").val())
+            errors.push("Country");
+
+        if (!$("#id").val())
+            errors.push("Company ID");
+
+        if (!areDetailsValid(errors)) {
+            return false;
         }
+
+        $(this).find('span').toggleClass('glyphicon glyphicon-refresh glyphicon-refresh-animate active');
+        $(this).prop('disabled', true);
+
+        //AJAX Request
+        $.ajax({
+            url: (url + "/updateCompany/" + $("#id").val()),
+            type: "POST",
+            dataType: 'json',
+            data: $("#edit-company-form").serialize(),
+            success: function (data, textStatus, jqXHR) {
+                $("#edit-area").toggleClass("hidden");
+                $("#edit-company-form  button").prop('disabled', false);
+                $("#edit-company-form button").find('span').removeClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+                populateModal(successStr, "Company with ID:" + data + " succesfully updated");
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#edit-company-form  button").prop('disabled', false);
+                $("#edit-company-form button").find('span').removeClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+                populateModal(errorStr, "Error in fetching company details");
+            }
+        });
     });
 
     $("#search-company-form button").click(function (e) {
@@ -62,7 +123,7 @@ $(document).ready(function () {
             url: (url + "/getCompany/" + companyId),
             type: "POST",
             dataType: 'json',
-            data: $("#create-company-form").serialize(),
+            data: {},
             success: function (data, textStatus, jqXHR) {
                 $("#edit-area").removeClass("hidden");
                 $("#edit-name").val(data.name);
@@ -80,8 +141,6 @@ $(document).ready(function () {
                 populateModal(errorStr, "Error in fetching company details");
             }
         });
-
-
     });
 
     $("#create-company-form button").click(function (e) {
@@ -116,6 +175,7 @@ $(document).ready(function () {
                 $("#create-company-form button").prop('disabled', false);
                 $("#create-company-form button").find('span').removeClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
                 populateModal(successStr, "Company created with ID:" + data);
+                populateCompaniesList(url);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 $("#create-company-form button").prop('disabled', false);
@@ -124,9 +184,48 @@ $(document).ready(function () {
             }
         });
 
+        e.preventDefault();
+    });
+
+    $("#create-owner-form button").click(function (e) {
+        var errors = [];
+
+        if (!$("#create-owner-form #owner-name").val())
+            errors.push("Name");
+
+        if (!$("#create-owner-form #owner-surname").val())
+            errors.push("Surname");
+
+        if (!$("#create-owner-form #owner-companyid").val())
+            errors.push("Company Id");
+
+        if (!areDetailsValid(errors)) {
+            return false;
+        }
+
+        $(this).find('span').toggleClass('glyphicon glyphicon-refresh glyphicon-refresh-animate active');
+        $(this).prop('disabled', true);
+
+        //send request
+        $.ajax({
+            url: (url + "/createOwner"),
+            type: "POST",
+            dataType: 'json',
+            data: $("#create-owner-form").serialize(),
+            success: function (data, textStatus, jqXHR) {
+                $("#create-owner-form button").prop('disabled', false);
+                $("#create-owner-form button").find('span').removeClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+                populateModal(successStr, "Owner created with ID:" + data);
+                populateOwnersList(url);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#create-owner-form button").prop('disabled', false);
+                $("#create-owner-form button").find('span').removeClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
+                populateModal(errorStr, "Error in creating owner");
+            }
+        });
 
         e.preventDefault();
-
     });
 
     var areDetailsValid = (function (errors) {
@@ -159,5 +258,61 @@ $(document).ready(function () {
         $("#client-modal p").html(text);
         $("#client-modal").modal('show');
     });
-
 });
+
+function populateCompaniesList(url) {
+
+    $.ajax({
+        url: (url + "/getAllCompanies"),
+        type: "POST",
+        dataType: 'json',
+        data: {},
+        success: function (data, textStatus, jqXHR) {
+            $("#collapseTwo table tbody").empty();
+            $.each(data, function (i, val) {
+                $("#collapseTwo table tbody").append(
+                    '<tr><form>' +
+                    '<td>' + val.id + '</td>' +
+                    '<td>' + val.name + '</td>' +
+                    '<td>' + val.address + '</td>' +
+                    '<td>' + val.city + '</td>' +
+                    '<td>' + val.country + '</td>' +
+                    '<td>' + val.email + '</td>' +
+                    '<td>' + val.phoneNumber + '</td>' +
+                    '</form></tr>'
+                );
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            populateModal(errorStr, "Error in fetching data");
+        }
+    });
+}
+
+function populateOwnersList(url) {
+    $.ajax({
+        url: (url + "/getOwners"),
+        type: "POST",
+        dataType: 'json',
+        data: {},
+        success: function (data, textStatus, jqXHR) {
+            $("#collapseFour table tbody").empty();
+            $.each(data, function (i, val) {
+                $("#collapseFour table tbody").append(
+                    '<tr>' +
+                    '<td>' + val.id + '</td>' +
+                    '<td>' + val.name + '</td>' +
+                    '<td>' + val.surname + '</td>' +
+                    '<td>' + val.companyTO.id + '</td>' +
+                    '<td>' + val.companyTO.name + '</td>' +
+                    '</tr>'
+                );
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            populateModal(errorStr, "Error in fetching data");
+        }
+    });
+}
+
+

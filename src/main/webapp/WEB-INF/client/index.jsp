@@ -182,7 +182,7 @@
                                 <form class="form-horizontal" role="form" id="edit-company-form">
                                 <span class="hidden" id="edit-area">
                                     <div class="row">
-                                        <div class="form-inline" >
+                                        <div class="form-inline">
                                             <label for="edit-name" class="control-label ">Name</label>
                                             <input type="text" class="form-control" id="edit-name" name="edit-name"
                                                    required="required" size="">
@@ -199,7 +199,7 @@
                                         <div class="col-md-12">&nbsp;</div>
                                     </div>
                                     <div class="row">
-                                        <div class="form-inline" >
+                                        <div class="form-inline">
                                             <label for="edit-country" class="control-label">Country</label>
                                             <input type="text" class="form-control" id="edit-country"
                                                    name="edit-country"
@@ -223,6 +223,60 @@
                                         </button>
                                     </div>
                                     </span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-link" data-toggle="collapse" data-parent="#accordion"
+                                   href="#collapseFour">View & Manage Owners</a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Surname</th>
+                                            <th>Company ID</th>
+                                            <th>Company Name</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <form class="form-inline" role="form" id="create-owner-form">
+                                    <div class="row">
+                                        <div class="form-inline">
+                                            <label for="owner-name" class="control-label">Name:</label>
+                                            <input type="text" class="form-control" id="owner-name"
+                                                   name="owner-name"
+                                                   required="required" size="">
+                                            <label for="owner-surname" class="control-label ">Surname:</label>
+                                            <input type="text" class="form-control" id="owner-surname"
+                                                   name="owner-surname"
+                                                   required="required">
+                                            <label for="owner-companyid" class="control-label ">Company Id:</label>
+                                            <input type="text" class="form-control" id="owner-companyid"
+                                                   name="owner-companyid"
+                                                   required="required">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">&nbsp;</div>
+                                    </div>
+                                    <div class="row">
+                                        <button role="button" class="btn btn-large btn-primary">
+                                            <span></span> Create
+                                        </button>
+                                    </div>
                                 </form>
                             </div>
                         </div>

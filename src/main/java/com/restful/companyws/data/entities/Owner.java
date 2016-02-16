@@ -25,5 +25,6 @@ public class Owner
     private String surname;
 
     @ManyToOne
+    @JoinColumn(name="company_id")
     private Company company;
 }
