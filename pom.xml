@@ -24,6 +24,7 @@
         <servletapi.version>2.5</servletapi.version>
         <tomcat.version>8.0.28</tomcat.version>
         <postgres.version>9.4.1207</postgres.version>
+        <commons.version>1.2.2</commons.version>
     </properties>
 
     <dependencies>
@@ -32,6 +33,12 @@
             <artifactId>postgresql</artifactId>
             <version>${postgres.version}</version>
         </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>${commons.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
