@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+var errorStr = "ERROR";
+var successStr = "SUCCESS";
 
 function populateCompaniesList(url) {
 
@@ -81,9 +82,6 @@ $(document).ready(function () {
 
     //Context path should be dynamically loaded
     var url = "https://restful-company-api.herokuapp.com/companyws";
-
-    var errorStr = "ERROR";
-    var successStr = "SUCCESS";
 
     populateCompaniesList(url);
     populateOwnersList(url);
