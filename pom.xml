@@ -7,7 +7,7 @@
     <groupId>com.restful</groupId>
     <artifactId>companyws</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <spring.framework.version>4.1.4.RELEASE</spring.framework.version>
@@ -22,6 +22,7 @@
         <jdk.version>1.8</jdk.version>
         <jstl.version>1.2</jstl.version>
         <servletapi.version>2.5</servletapi.version>
+        <tomcat.version>8.0.28</tomcat.version>
     </properties>
 
     <dependencies>
@@ -97,7 +98,7 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
-          <dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>${jstl.version}</version>
@@ -108,6 +109,37 @@
             <version>${servletapi.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-logging-juli</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jasper</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jasper-el</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jsp-api</artifactId>
+            <version>${tomcat.version}</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -144,8 +176,29 @@
                         </goals>
                     </execution>
                 </executions>
-
-            </plugin>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>appassembler-maven-plugin</artifactId>
+                    <version>1.1.1</version>
+                    <configuration>
+                        <assembleDirectory>target</assembleDirectory>
+                        <programs>
+                            <program>
+                                <mainClass>launch.Main</mainClass>
+                                <name>webapp</name>
+                            </program>
+                        </programs>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>assemble</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
         </plugins>
         <finalName>restful-company-api</finalName>
     </build>
