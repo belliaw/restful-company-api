@@ -3,6 +3,64 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
+function populateCompaniesList(url) {
+
+    $.ajax({
+        url: (url + "/getAllCompanies"),
+        type: "POST",
+        dataType: 'json',
+        data: {},
+        success: function (data, textStatus, jqXHR) {
+            $("#collapseTwo table tbody").empty();
+            $.each(data, function (i, val) {
+                $("#collapseTwo table tbody").append(
+                    '<tr><form>' +
+                    '<td>' + val.id + '</td>' +
+                    '<td>' + val.name + '</td>' +
+                    '<td>' + val.address + '</td>' +
+                    '<td>' + val.city + '</td>' +
+                    '<td>' + val.country + '</td>' +
+                    '<td>' + val.email + '</td>' +
+                    '<td>' + val.phoneNumber + '</td>' +
+                    '</form></tr>'
+                );
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            populateModal(errorStr, "Error in fetching data");
+        }
+    });
+}
+
+function populateOwnersList(url) {
+    $.ajax({
+        url: (url + "/getOwners"),
+        type: "POST",
+        dataType: 'json',
+        data: {},
+        success: function (data, textStatus, jqXHR) {
+            $("#collapseFour table tbody").empty();
+            $.each(data, function (i, val) {
+                $("#collapseFour table tbody").append(
+                    '<tr>' +
+                    '<td>' + val.id + '</td>' +
+                    '<td>' + val.name + '</td>' +
+                    '<td>' + val.surname + '</td>' +
+                    '<td>' + val.companyTO.id + '</td>' +
+                    '<td>' + val.companyTO.name + '</td>' +
+                    '</tr>'
+                );
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            populateModal(errorStr, "Error in fetching data");
+        }
+    });
+}
+
+
 $(document).ready(function () {
 
     //Context path should be dynamically loaded
@@ -217,60 +275,5 @@ $(document).ready(function () {
         $("#client-modal").modal('show');
     });
 });
-
-function populateCompaniesList(url) {
-
-    $.ajax({
-        url: (url + "/getAllCompanies"),
-        type: "POST",
-        dataType: 'json',
-        data: {},
-        success: function (data, textStatus, jqXHR) {
-            $("#collapseTwo table tbody").empty();
-            $.each(data, function (i, val) {
-                $("#collapseTwo table tbody").append(
-                    '<tr><form>' +
-                    '<td>' + val.id + '</td>' +
-                    '<td>' + val.name + '</td>' +
-                    '<td>' + val.address + '</td>' +
-                    '<td>' + val.city + '</td>' +
-                    '<td>' + val.country + '</td>' +
-                    '<td>' + val.email + '</td>' +
-                    '<td>' + val.phoneNumber + '</td>' +
-                    '</form></tr>'
-                );
-            });
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            populateModal(errorStr, "Error in fetching data");
-        }
-    });
-}
-
-function populateOwnersList(url) {
-    $.ajax({
-        url: (url + "/getOwners"),
-        type: "POST",
-        dataType: 'json',
-        data: {},
-        success: function (data, textStatus, jqXHR) {
-            $("#collapseFour table tbody").empty();
-            $.each(data, function (i, val) {
-                $("#collapseFour table tbody").append(
-                    '<tr>' +
-                    '<td>' + val.id + '</td>' +
-                    '<td>' + val.name + '</td>' +
-                    '<td>' + val.surname + '</td>' +
-                    '<td>' + val.companyTO.id + '</td>' +
-                    '<td>' + val.companyTO.name + '</td>' +
-                    '</tr>'
-                );
-            });
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            populateModal(errorStr, "Error in fetching data");
-        }
-    });
-}
 
 
