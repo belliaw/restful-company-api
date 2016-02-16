@@ -4,57 +4,15 @@
  * and open the template in the editor.
  */
 $(document).ready(function () {
-    var url = "http://localhost:8001/companyws";
+
+    //Context path should be dynamically loaded
+    var url = "https://restful-company-api.herokuapp.com/companyws";
 
     var errorStr = "ERROR";
     var successStr = "SUCCESS";
 
-    //var json = '[{"id":1,"name":"Joe","surname":"Doe","companyTO":{"id":10,"name":"Test","address":"Tetst add","city":"Mosta","country":"Malta","email":"mamam","phoneNumber":"mamam"}}]';
-
     populateCompaniesList(url);
     populateOwnersList(url);
-
-    //$.each($.parseJSON(json), function (i, val) {
-    //    $("#collapseFour table tbody").append(
-    //        '<tr>' +
-    //        '<td>' + val.id + '</td>' +
-    //        '<td>' + val.name + '</td>' +
-    //        '<td>' + val.surname + '</td>' +
-    //        '<td>' + val.companyTO.id + '</td>' +
-    //        '<td>' + val.companyTO.name + '</td>' +
-    //        '</tr>'
-    //    );
-    //});
-
-    //get companies
-    //$.ajax({
-    //    url: (url + "/getAllCompanies"),
-    //    type: "POST",
-    //    dataType: 'json',
-    //    data: {},
-    //    success: function (data, textStatus, jqXHR)
-    //    {
-    //        $.each(data, function (i, val) {
-    //            $("#collapseTwo table tbody").append(
-    //                '<tr><form>' +
-    //                '<td>' + val.id + '</td>' +
-    //                '<td>' + val.name + '</td>' +
-    //                '<td>' + val.address + '</td>' +
-    //                '<td>' + val.city + '</td>' +
-    //                '<td>' + val.country + '</td>' +
-    //                '<td>' + val.email + '</td>' +
-    //                '<td>' + val.phoneNumber + '</td>' +
-    //                '</form></tr>'
-    //            );
-    //        });
-    //    },
-    //    error: function (jqXHR, textStatus, errorThrown)
-    //    {
-    //        populateModal(errorStr,"Error in fetching data");
-    //    }
-    //});
-
-    //getOwners
 
     $("#edit-company-form button").click(function (e) {
 
