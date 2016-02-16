@@ -123,6 +123,7 @@ $(document).ready(function () {
                 $("#edit-company-form  button").prop('disabled', false);
                 $("#edit-company-form button").find('span').removeClass('glyphicon glyphicon-refresh glyphicon-refresh-animate');
                 populateModal(successStr, "Company with ID:" + data + " succesfully updated");
+                populateCompaniesList(url);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 $("#edit-company-form  button").prop('disabled', false);
