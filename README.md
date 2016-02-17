@@ -45,8 +45,8 @@ Interface Modules
 -------
 
 The application provides two API modules for access which are:
-	- com.restful.companyws.api.Controller -> Exposes the RESTful interface
-	- com.restful.companyws.api.WebController -> Provides the jQuery client
+* com.restful.companyws.api.Controller -> Exposes the RESTful interface
+* com.restful.companyws.api.WebController -> Provides the jQuery client
 
 GitHub
 ------ 
@@ -93,7 +93,9 @@ restarts, hence data in previous requests is lost. This is due to the fact that
 the application's spring context is configured to create a schema upon deployment. 
 This may be disabled accordingly in the context by commenting the line and rebuild the project:
 
-	- <prop key="hibernate.hbm2ddl.auto">${db.mode}</prop>
+```
+<prop key="hibernate.hbm2ddl.auto">${db.mode}</prop>
+```
 	
 In the case of difficulty please contact the author on the details listed hereunder
 in the Authors section.
