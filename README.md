@@ -130,18 +130,22 @@ $ curl http://restful-company-api.herokuapp.com/companyws/getAllCompanies
 			&edit-country={country}&edit-email={email}&edit-phoneNumber={phonenumber}" 
 			{URL}/companyws/updateCompany/{company-id}
 ```
-$ curl --data "edit-name=Tech Works&edit-address=20, Ave treet&edit-city=Copenhagen&edit-country=Denmark&edit-email=contact@techworks.com&edit-phoneNumber=098272621" http://restful-company-api.herokuapp.com/companyws/updateCompany/3
+$ curl --data "edit-name=Tech Works&edit-address=20, Ave Street&edit-city=Copenhagen&edit-country=Denmark&edit-email=contact@techworks.com&edit-phoneNumber=098272621" http://restful-company-api.herokuapp.com/companyws/updateCompany/3
 ```		
-	- createOwner *An Id of type long of the newly created owner is returned*:
+
+* createOwner *An Id of type long of the newly created owner is returned*:
 	
-		.. curl --data "owner-name={name}&owner-surname={surname}&owner-companyid={company-id}"
-		   {URL}/companyws/createOwner
-		.. Ex: curl --data "owner-name=William&owner-surname=Bellia&owner-companyid=3" http://restful-company-api.herokuapp.com/companyws/createOwner
+	* curl --data "owner-name={name}&owner-surname={surname}&owner-companyid={company-id}" {URL}/companyws/createOwner
+```
+$ curl --data "owner-name=William&owner-surname=Bellia&owner-companyid=3" http://restful-company-api.herokuapp.com/companyws/createOwner
+```
 		
-	- getOwners *A JSON object containing a list of owners is returned*:
+* getOwners *A JSON object containing a list of owners is returned*:
 	
-		.. curl {URL}/companyws/getOwners
-		.. Ex: curl http://restful-company-api.herokuapp.com/companyws/getOwners
+	* curl {URL}/companyws/getOwners
+```
+$ curl http://restful-company-api.herokuapp.com/companyws/getOwners
+```		
 
 Authors
 -------------
