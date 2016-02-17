@@ -103,6 +103,7 @@ API Reference
 
 The RESTful api of this application consists of 6 methods. Below is a reference on
 how these methods may be queries using cURL:
+#API methods
 	
 	* createCompany *An Id of type long of the newly created company is returned*:
 		** curl --data "name={name}&address={address}&city={city}
