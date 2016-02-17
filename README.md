@@ -104,7 +104,7 @@ API Reference
 The RESTful api of this application consists of 6 methods. Below is a reference on
 how these methods may be queries using cURL:
 * createCompany *An Id of type long of the newly created company is returned*:
-..*curl --data "name={name}&address={address}&city={city}&country={country}" {URL}/companyws/createCompany
+..* curl --data "name={name}&address={address}&city={city}&country={country}" {URL}/companyws/createCompany
 ```
 $ curl --data "name=Tech Works&address=20, Ave Street&city=Copenhagen&country=Denmark"http://restful-company-api.herokuapp.com/companyws/createCompany
 ```
