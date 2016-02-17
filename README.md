@@ -112,23 +112,26 @@ $ curl --data "name=Tech Works&address=20, Ave Street&city=Copenhagen&country=De
 		
 * getCompany/{company-id} *A JSON object containing company details is returned*:
 		
-		.. curl {URL}/companyws/getCompany/{id}
-		.. Ex: curl http://restful-company-api.herokuapp.com/companyws/getCompany/3
-		
-	* getAllCompanies *A JSON object containing a list of companies is returned*:
+	* curl {URL}/companyws/getCompany/{id}
+```
+$ curl http://restful-company-api.herokuapp.com/companyws/getCompany/3
+```		
+
+* getAllCompanies *A JSON object containing a list of companies is returned*:
 	
-		.. curl {URL}/getAllCompanies
-		.. Ex: curl http://restful-company-api.herokuapp.com/companyws/getAllCompanies
+	* curl {URL}/getAllCompanies
+```	
+$ curl http://restful-company-api.herokuapp.com/companyws/getAllCompanies
+```		
 	
+* updateCompany/{company-id} *An Id of type long of the updated company is returned*:
 	
-	- updateCompany/{company-id} *An Id of type long of the updated company is returned*:
-	
-		.. curl --data "edit-name={name}&edit-address={address}&edit-city={city}
+	* curl --data "edit-name={name}&edit-address={address}&edit-city={city}
 			&edit-country={country}&edit-email={email}&edit-phoneNumber={phonenumber}" 
 			{URL}/companyws/updateCompany/{company-id}
-		.. Ex: curl --data "edit-name=Tech Works&edit-address=20, Ave 	Street&edit-city=Copenhagen&edit-country=Denmark&edit-email=contact@techworks.com
-		&edit-phoneNumber=098272621" http://restful-company-api.herokuapp.com/companyws/updateCompany/3
-		
+```
+$ curl --data "edit-name=Tech Works&edit-address=20, Ave treet&edit-city=Copenhagen&edit-country=Denmark&edit-email=contact@techworks.com&edit-phoneNumber=098272621" http://restful-company-api.herokuapp.com/companyws/updateCompany/3
+```		
 	- createOwner *An Id of type long of the newly created owner is returned*:
 	
 		.. curl --data "owner-name={name}&owner-surname={surname}&owner-companyid={company-id}"
