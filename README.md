@@ -103,16 +103,13 @@ API Reference
 
 The RESTful api of this application consists of 6 methods. Below is a reference on
 how these methods may be queries using cURL:
-#API methods
-	
-	* createCompany *An Id of type long of the newly created company is returned*:
-		** curl --data "name={name}&address={address}&city={city}
-			&country={country}" {URL}/companyws/createCompany
-		```
-		$ curl --data "name=Tech Works&address=20, Ave Street&city=Copenhagen&country=Denmark"http://restful-company-api.herokuapp.com/companyws/createCompany
-		```
+* createCompany *An Id of type long of the newly created company is returned*:
+** curl --data "name={name}&address={address}&city={city}&country={country}" {URL}/companyws/createCompany
+```
+$ curl --data "name=Tech Works&address=20, Ave Street&city=Copenhagen&country=Denmark"http://restful-company-api.herokuapp.com/companyws/createCompany
+```
 		
-	* getCompany/{company-id} *A JSON object containing company details is returned*:
+* getCompany/{company-id} *A JSON object containing company details is returned*:
 		
 		.. curl {URL}/companyws/getCompany/{id}
 		.. Ex: curl http://restful-company-api.herokuapp.com/companyws/getCompany/3
